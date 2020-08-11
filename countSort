@@ -42,10 +42,10 @@ int main(){
             printf("%d,", list[i]);
         }
         else{
-            printf("%d\n", list[i]);
+            printf("%d", list[i]);
         }
     }
-    printf("]");
+    printf("]\n");
 
     counting_sort(list,n);
     return 0;
