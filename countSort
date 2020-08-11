@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<stdlib.h>
  
 void counting_sort(int list[],int n){
     //creates an array of all the possible inputs
@@ -15,18 +16,37 @@ void counting_sort(int list[],int n){
     }
 
     //prints list
+    printf("Output Array = [");
     for(int i = 0; i <= n; i++){
         while(match[i]>0){
-            printf("%d\n", i);
+            if(i != n){
+                printf("%d,", i);
+            }
+            else{
+                printf("%d", i);
+            }
             match[i]--;
         }
     }
+    printf("]\n");
 }
  
 int main(){
-    int list[15] = {4,12,9,7,13,15,2,14,8,3,5,13,4,13,0};
     int n = 15;
-     
+    int *list = (int*)malloc(n * sizeof(int));
+
+    printf("Input Array = [");
+    for(int i = 0; i <= n; i++){
+        list[i] = rand() % 16;
+        if(i != n){
+            printf("%d,", list[i]);
+        }
+        else{
+            printf("%d\n", list[i]);
+        }
+    }
+    printf("]");
+
     counting_sort(list,n);
     return 0;
 }
