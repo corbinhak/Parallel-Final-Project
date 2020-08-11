@@ -1,0 +1,32 @@
+#include<stdio.h>
+ 
+void counting_sort(int list[],int n){
+    //creates an array of all the possible inputs
+    int match[15+1]={0};
+    
+
+    //compares and calculates the final array
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j <= n; j++){
+            if(list[i] == j){
+                match[j] = match[j] + 1;
+            }
+        }
+    }
+
+    //prints list
+    for(int i = 0; i <= n; i++){
+        while(match[i]>0){
+            printf("%d\n", i);
+            match[i]--;
+        }
+    }
+}
+ 
+int main(){
+    int list[15] = {4,12,9,7,13,15,2,14,8,3,5,13,4,13,0};
+    int n = 15;
+     
+    counting_sort(list,n);
+    return 0;
+}
