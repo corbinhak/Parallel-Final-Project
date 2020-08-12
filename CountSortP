@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<stdlib.h>
+ 
+#include "mpi.h"
+
+int main(int argc, char *argv[]){
+    int n = 15;
+    int rank, numranks;
+
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &numranks);
+    MPI_Status stats;
+
+    //creates an array for the inputs
+    int *list = (int*)malloc(n * sizeof(int));
+    //creates an array of all the possible inputs
+    int *match = (int*)malloc((n+1) * sizeof(int));
+
+
+    printf("Input Array = [");
+    for(int i = 0; i <= n; i++){
+        list[i] = rand() % (n+1);
+        if(i != n){
+            printf("%d,", list[i]);
+        }
+        else{
+            printf("%d", list[i]);
+        }
+    }
+    printf("]\n");
+
+    for(int i = 0; i <= n; i++){
+        match[i] = 0;
+    }
+
+    //compares and calculates the final array
+    int x;
+    for(int i = 0; i < n; i++){
+        x = list[i];
+        match[x]++;
+    }
+
+
+   //prints list
+    printf("Output Array = [");
+    for(int i = 0; i <= n; i++){
+        while(match[i]>0){
+            if(i != n){
+                printf("%d,", i);
+            }
+            else{
+                printf("%d", i);
+            }
+            match[i]--;
+        }
+    }
+    printf("]\n");
+
+    MPI_Finalize();
+    return 0;
+}
