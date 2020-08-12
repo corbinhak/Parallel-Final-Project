@@ -1,10 +1,26 @@
 #include<stdio.h>
 #include<stdlib.h>
  
-void counting_sort(int list[],int n){
+int main(){
+    int n = 15;
+
+    //creates an array for the inputs
+    int *list = (int*)malloc(n * sizeof(int));
     //creates an array of all the possible inputs
-    int match[15+1]={0};
-    
+    int *match = (int*)malloc((n+1) * sizeof(int));
+
+
+    printf("Input Array = [");
+    for(int i = 0; i <= n; i++){
+        list[i] = rand() % 16;
+        if(i != n){
+            printf("%d,", list[i]);
+        }
+        else{
+            printf("%d", list[i]);
+        }
+    }
+    printf("]\n");
 
     //compares and calculates the final array
     for(int i = 0; i < n; i++){
@@ -29,24 +45,6 @@ void counting_sort(int list[],int n){
         }
     }
     printf("]\n");
-}
- 
-int main(){
-    int n = 15;
-    int *list = (int*)malloc(n * sizeof(int));
 
-    printf("Input Array = [");
-    for(int i = 0; i <= n; i++){
-        list[i] = rand() % 16;
-        if(i != n){
-            printf("%d,", list[i]);
-        }
-        else{
-            printf("%d", list[i]);
-        }
-    }
-    printf("]\n");
-
-    counting_sort(list,n);
     return 0;
 }
