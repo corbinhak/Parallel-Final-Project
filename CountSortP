@@ -1,13 +1,15 @@
 #include<stdio.h>
 #include<stdlib.h>
- 
+#include<time.h>
+
 #include "mpi.h"
 
 int main(int argc, char *argv[]){
-    int n = 15;
+    double startTime = MPI_Wtime();
+    int n = 10000;
     int rank, numranks;
     int num, counter;
-    int max = 20;
+    int max = 100;
 
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -25,12 +27,14 @@ int main(int argc, char *argv[]){
     int *start = (int*)malloc(numranks*sizeof(int));
     int *end = (int*)malloc(numranks*sizeof(int));
 
+    srand(time(NULL));
+
     //fills and outputs the input array
     //also initalizes the match array to 0
     if(rank == 0){
         printf("Input Array = [");
         for(int i = 0; i < n; i++){
-            list[i] = rand() % (max);
+            list[i] = rand() % (max+1);
             if(i != n-1){
                 printf("%d,", list[i]);
             }
@@ -41,7 +45,7 @@ int main(int argc, char *argv[]){
         printf("]\n");
 
         for(int i = 0; i < max; i++){
-            match[i]= 0;
+            match[i] = 0;
         }
     }
 
@@ -109,12 +113,24 @@ int main(int argc, char *argv[]){
     }
 
     //Combines work from all ranks
-    for(int i = 0; i < max; i++){
+    for(int i = 0; i <= max; i++){
         MPI_Allreduce(&match[i], &result[i], 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);
     }
 
     //Outputs the results
    if(rank == numranks-1){
+/*
+       printf("Count Array = [");
+       for(int i = 0; i <= max; i++){
+            if(i != n){
+                printf("%d,", result[i]);
+            }
+            else{
+                printf("%d", result[i]);
+            }
+       }
+       printf("]\n");
+*/
        counter = 0;
         printf("Output Array = [");
         for(int i = 0; i <= max; i++){
@@ -131,6 +147,17 @@ int main(int argc, char *argv[]){
             }
         }
         printf("]\n");
+    }
+
+    double endTime = MPI_Wtime();
+    double runtime = endTime - startTime;
+
+    printf("Rank %d took %f\n", rank, runtime);
+
+    MPI_Allreduce(MPI_IN_PLACE, &runtime, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+
+    if(rank == numranks - 1){
+        printf("Total runtime: %f\n", runtime);
     }
 
     MPI_Finalize();
