@@ -1,6 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void mergeSort(int[], int, int);
+void merge(int[], int, int, int);
+
+int main(int argc, char **argv)
+{
+    //Number of elements
+    int N = 100;
+    //Initalize Array to be sorted
+    int *arr = (int *)malloc(sizeof(int)*N); //allocate 100 ints
+    for (int i =0; i < N; i++) {
+        arr[i] = rand() % 2147483647;
+    }
+    mergeSort(arr, 0, N);
+    for (int i =0; i<100; i++) {
+        printf("Array[%d] = %d\n", i, arr[i]);
+    }
+    free(arr);
+    return 0;
+} 
+
 void merge(int arr[], int start, int middle, int end)
 {
     int i, j, k;
@@ -62,18 +82,4 @@ void mergeSort(int arr[], int start, int end)
         mergeSort(arr, middle+1, end);
         merge(arr, start, middle, end);
     }
-}
-int main(int argc, char **argv)
-{
-    //Initalize Array to be sorted
-    int *arr = (int *)malloc(sizeof(int)*100); //allocate 100 ints
-    for (int i =0; i < 100; i++) {
-        arr[i] = rand() % 2147483647;
-    }
-    mergeSort(arr, 0, 100);
-    for (int i =0; i<100; i++) {
-        printf("Array[%d] = %d\n", i, arr[i]);
-    }
-    free(arr);
-    return 0;
 }
