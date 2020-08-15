@@ -1,2 +1,2 @@
 # Parallel-Final-Project
-Final Project for COMP3450 Parallel Computing &amp; Distrubuted Systems. Goal is to parallize 3 sorting algortihms.
+Final Project for COMP3450 Parallel Computing &amp; Distrubuted Systems. Goal is to parallize Count Sort, Merge Sort, and Bubble Sort using MPI or OpenMP.
